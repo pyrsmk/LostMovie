@@ -1,0 +1,23 @@
+{
+	"name": "pyrsmk/lostmovie",
+	"description": "Unified way to search movies",
+	"keywords": [
+        "movie",
+        "search",
+        "senscritique"
+    ],
+	"license": "MIT",
+	"authors": [{
+		"name": "Aurélien Delogu",
+		"email": "dev@dreamysource.fr",
+		"homepage": "http://dreamysource.io/project/lostmovie"
+	}],
+	"require": {
+		"fabpot/goutte": "^3.2"
+	},
+	"autoload": {
+		"psr-4" : {
+			"LostMovie\\" : "src/"
+		}
+	}
+}
