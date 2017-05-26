@@ -37,7 +37,7 @@ abstract class AbstractEngine {
     */
     public function search($title) {
         // Prepare
-        $fields = ['title', 'year', 'duration', 'genre', 'rating', 'poster', 'synopsis'];
+        $fields = ['title', 'year', 'duration', 'genres', 'rating', 'poster', 'synopsis'];
         // Get data
         $data = $this->_search($title);
         // Verify
