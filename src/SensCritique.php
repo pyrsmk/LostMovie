@@ -26,7 +26,7 @@ class SensCritique extends AbstractEngine {
             'title' => $crawler->filter('.pvi-product-originaltitle')->text(),
             'year' => trim($crawler->filter('.pvi-product-year')->text(), '()'),
             'duration' => trim($crawler->filter('.pvi-productDetails-item')->eq(2)->text()),
-            'genre' => $crawler->filter('.pvi-productDetails-item')->eq(1)->filter('span')->each(function($node) {
+            'genres' => $crawler->filter('.pvi-productDetails-item')->eq(1)->filter('span')->each(function($node) {
                 return strtolower($node->text());
             }),
             'rating' => $crawler->filter('.pvi-scrating-value')->text(),
