@@ -5,4 +5,4 @@ namespace LostMovie;
 /*
     Streams exception class
 */
-class LostMovie extends \Exception {}
+class Exception extends \Exception {}
