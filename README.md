@@ -1,4 +1,4 @@
-LostMovie 1.0.0
+LostMovie 1.1.0
 ===============
 
 Unified way to search movies online. Currently, only SensCritique is supported.
@@ -28,7 +28,7 @@ array(7) {
   ["title"] => string(29) "Star Wars : The Force Awakens"
   ["year"] => string(4) "2015"
   ["duration"] => string(10) "2 h 16 min"
-  ["genre"] => array(3) {
+  ["genres"] => array(3) {
     [0] => string(6) "action"
     [1] => string(8) "aventure"
     [2] => string(11) "fantastique"
