@@ -33,7 +33,7 @@ abstract class AbstractEngine {
             string $title
         
         Return
-            array
+            array, null
     */
     public function search($title) {
         // Prepare
@@ -41,14 +41,16 @@ abstract class AbstractEngine {
         // Get data
         $data = $this->_search($title);
         // Verify
-        foreach($fields as $field) {
-            if(!array_key_exists($field, $data)) {
-                throw new Exception("'$field' field not found");
+        if($data !== null) {
+            foreach($fields as $field) {
+                if(!array_key_exists($field, $data)) {
+                    throw new Exception("'$field' field not found");
+                }
             }
-        }
-        foreach($data as $field => $value) {
-            if(!in_array($field, $fields)) {
-                throw new Exception("'$field' field not supported");
+            foreach($data as $field => $value) {
+                if(!in_array($field, $fields)) {
+                    throw new Exception("'$field' field not supported");
+                }
             }
         }
         return $data;
@@ -61,7 +63,7 @@ abstract class AbstractEngine {
             string $title
         
         Return
-            array
+            array, null
     */
     abstract protected function _search($title);
     
