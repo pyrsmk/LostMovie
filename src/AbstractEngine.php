@@ -4,6 +4,7 @@ namespace LostMovie;
 
 use GuzzleHttp;
 use Goutte;
+use Symfony\Component\DomCrawler\Crawler;
 
 /*
     Abstract search engine
@@ -38,33 +39,68 @@ abstract class AbstractEngine {
     public function search($title) {
         // Prepare
         $fields = ['title', 'year', 'duration', 'genres', 'rating', 'poster', 'synopsis'];
-        // Get data
-        $data = $this->_search($title);
-        // Verify
-        if($data !== null) {
-            foreach($fields as $field) {
-                if(!array_key_exists($field, $data)) {
-                    throw new Exception("'$field' field not found");
+        // Search in Google
+        $crawler = $this->goutte->request(
+            'GET',
+            'https://www.google.com/search?q=site:'.$this->_getSiteUrl().' '.$title
+        );
+        // No results
+        if(!count($crawler->filter('.r a'))) {
+            return null;
+        }
+        // Extract all URLs
+        $urls = $crawler->filter('.r a')->each(function($node) {
+            parse_str(parse_url($node->extract('href')[0], PHP_URL_QUERY), $vars);
+            return $vars['q'];
+        });
+        foreach($urls as $url) {
+            // We found a result!
+            if(preg_match($this->_getUrlPattern(), $url)) {
+                // Extract data
+                $data = $this->_extract($this->goutte->request('GET', $url));
+                // Verify data scheme
+                foreach($fields as $field) {
+                    if(!array_key_exists($field, $data)) {
+                        throw new Exception("'$field' field not found");
+                    }
                 }
-            }
-            foreach($data as $field => $value) {
-                if(!in_array($field, $fields)) {
-                    throw new Exception("'$field' field not supported");
+                foreach($data as $field => $value) {
+                    if(!in_array($field, $fields)) {
+                        throw new Exception("'$field' field not supported");
+                    }
                 }
+                return $data;
             }
         }
-        return $data;
+        // Nothing has been found on the first page
+        return null;
     }
-    
+
     /*
-        Search for a movie
+        Return the site URL for searching
+
+        Return
+            string
+    */
+    abstract protected function _getSiteUrl();
+
+    /*
+        Return the pattern to use to find the right movie URL
+
+        Return
+            string
+    */
+    abstract protected function _getUrlPattern();
+
+    /*
+        Extract movie data
         
         Parameters
-            string $title
+            Symfony\Component\DomCrawler\Crawler $crawler
         
         Return
-            array, null
+            array
     */
-    abstract protected function _search($title);
+    abstract protected function _extract(Crawler $crawler);
     
 }
