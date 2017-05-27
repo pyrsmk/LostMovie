@@ -23,7 +23,7 @@ var_dump($data);
 
 It will return :
 
-```
+```php
 array(7) {
   ["title"] => string(29) "Star Wars : The Force Awakens"
   ["year"] => string(4) "2015"
@@ -38,6 +38,8 @@ array(7) {
   ["synopsis"] => string(148) "Septième épisode de la saga Star Wars et premier d'une nouvelle trilogie, dont les événements se déroulent trente ans après Le retour du Jedi."
 }
 ```
+
+If no movie has been found, the response will be `null`.
 
 License
 -------
