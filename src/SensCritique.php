@@ -40,20 +40,44 @@ class SensCritique extends AbstractEngine {
     */
     protected function _extract(Crawler $crawler) {
         $title = $crawler->filter('.pvi-product-originaltitle');
-        if(!count($title)) {
-            $title = $crawler->filter('.pvi-product-title');
+        $title = count($title) ? $title->text() : $crawler->filter('.pvi-product-title')->text();
+
+        $year = $crawler->filter('.pvi-product-year');
+        $year = count($year) ? trim($year->text(), '()') : '';
+
+        $year = $crawler->filter('.pvi-product-year');
+        $year = count($year) ? trim($year->text(), '()') : '';
+
+        $duration = $crawler->filter('.pvi-productDetails-item')->eq(2);
+        $duration = count($duration) ? $duration->text() : '';
+
+        $genres = $crawler->filter('.pvi-productDetails-item')->eq(1);
+        if(count($genres)) {
+            $genres = $genres->filter('span')->each(function($node) {
+                return trim(strtolower($node->text()));
+            });
+        }
+        else {
+            $genres = [];
         }
 
+        $rating = $crawler->filter('.pvi-scrating-value');
+        $rating = count($rating) ? $rating->text() : '';
+
+        $poster = $crawler->filter('.pvi-hero-poster');
+        $poster = count($poster) ? $poster->attr('src') : '';
+
+        $synopsis = $crawler->filter('.pvi-productDetails-resume');
+        $synopsis = count($synopsis) ? $synopsis->text() : '';
+
         return [
-            'title' => trim($title->text()),
-            'year' => trim($crawler->filter('.pvi-product-year')->text(), '()'),
-            'duration' => trim($crawler->filter('.pvi-productDetails-item')->eq(2)->text()),
-            'genres' => $crawler->filter('.pvi-productDetails-item')->eq(1)->filter('span')->each(function($node) {
-                return trim(strtolower($node->text()));
-            }),
-            'rating' => trim($crawler->filter('.pvi-scrating-value')->text()),
-            'poster' => $crawler->filter('.pvi-hero-poster')->attr('src'),
-            'synopsis' => trim($crawler->filter('.pvi-productDetails-resume')->text())
+            'title' => trim($title),
+            'year' => $year,
+            'duration' => trim($duration),
+            'genres' => $genres,
+            'rating' => trim($rating),
+            'poster' => $poster,
+            'synopsis' => trim($synopsis)
         ];
     }
     
