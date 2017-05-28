@@ -26,6 +26,26 @@ abstract class AbstractEngine {
         $this->goutte = new Goutte\Client();
         $this->goutte->setClient($this->guzzle);
     }
+
+    /*
+        Get the Guzzle driver
+
+        Return
+            GuzzleHttp\Client
+    */
+    public function getGuzzle() {
+        return $this->guzzle;
+    }
+
+    /*
+        Get the Goutte driver
+
+        Return
+            Goutte\Client
+    */
+    public function getGoutte() {
+        return $this->goutte;
+    }
     
     /*
         Search for a movie
