@@ -58,15 +58,18 @@ abstract class AbstractEngine {
             if(preg_match($this->_getUrlPattern(), $url)) {
                 // Extract data
                 $data = $this->_extract($this->goutte->request('GET', $url));
-                // Verify data scheme
+                // Verify data scheme and format
                 foreach($fields as $field) {
                     if(!array_key_exists($field, $data)) {
                         throw new Exception("'$field' field not found");
                     }
                 }
-                foreach($data as $field => $value) {
+                foreach($data as $field => &$value) {
                     if(!in_array($field, $fields)) {
                         throw new Exception("'$field' field not supported");
+                    }
+                    if(is_string($value)) {
+                        $value = trim($value);
                     }
                 }
                 return $data;

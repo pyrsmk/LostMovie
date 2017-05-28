@@ -71,13 +71,13 @@ class SensCritique extends AbstractEngine {
         $synopsis = count($synopsis) ? $synopsis->text() : '';
 
         return [
-            'title' => trim($title),
+            'title' => $title,
             'year' => $year,
-            'duration' => trim($duration),
+            'duration' => $duration,
             'genres' => $genres,
-            'rating' => trim($rating),
+            'rating' => $rating,
             'poster' => $poster,
-            'synopsis' => trim($synopsis)
+            'synopsis' => $synopsis
         ];
     }
     
