@@ -9,4 +9,4 @@ set_time_limit(0);
 
 $senscritique = new LostMovie\SensCritique();
 
-debug($senscritique->search('star wars 7'));
+debug($senscritique->search('50-50 (2011)'));

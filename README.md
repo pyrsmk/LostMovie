@@ -1,4 +1,4 @@
-LostMovie 1.2.0
+LostMovie 1.2.1
 ===============
 
 Unified way to search movies online. Currently, only SensCritique is supported.
@@ -40,6 +40,11 @@ array(7) {
 ```
 
 If no movie has been found, the response will be `null`.
+
+Notes about the search engines
+------------------------------
+
+We're using the Google search engine to have better results. Please don't make a whole bunch of requests directly otherwise Google will block ulterior requests for a time.
 
 License
 -------

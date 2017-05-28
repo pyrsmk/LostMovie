@@ -39,16 +39,21 @@ class SensCritique extends AbstractEngine {
             array
     */
     protected function _extract(Crawler $crawler) {
+        $title = $crawler->filter('.pvi-product-originaltitle');
+        if(!count($title)) {
+            $title = $crawler->filter('.pvi-product-title');
+        }
+
         return [
-            'title' => $crawler->filter('.pvi-product-originaltitle')->text(),
+            'title' => trim($title->text()),
             'year' => trim($crawler->filter('.pvi-product-year')->text(), '()'),
             'duration' => trim($crawler->filter('.pvi-productDetails-item')->eq(2)->text()),
             'genres' => $crawler->filter('.pvi-productDetails-item')->eq(1)->filter('span')->each(function($node) {
-                return strtolower($node->text());
+                return trim(strtolower($node->text()));
             }),
-            'rating' => $crawler->filter('.pvi-scrating-value')->text(),
+            'rating' => trim($crawler->filter('.pvi-scrating-value')->text()),
             'poster' => $crawler->filter('.pvi-hero-poster')->attr('src'),
-            'synopsis' => $crawler->filter('.pvi-productDetails-resume')->text()
+            'synopsis' => trim($crawler->filter('.pvi-productDetails-resume')->text())
         ];
     }
     
