@@ -1,4 +1,4 @@
-LostMovie 1.2.1
+LostMovie 1.2.2
 ===============
 
 Unified way to search movies online. Currently, only SensCritique is supported.

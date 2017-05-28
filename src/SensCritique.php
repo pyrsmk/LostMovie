@@ -26,7 +26,7 @@ class SensCritique extends AbstractEngine {
             string
     */
     protected function _getUrlPattern() {
-        return '/https:\/\/www.senscritique.com\/film\/\w+\/\d+/';
+        return '/^https?:\/\/www.senscritique.com\/film\/\w+\/\d+$/';
     }
 
     /*
