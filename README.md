@@ -41,10 +41,20 @@ array(7) {
 
 If no movie has been found, the response will be `null`.
 
+Guzzle/Goutte
+-------------
+
+LostMovie is working with [Guzzle](https://github.com/guzzle/guzzle) and [Goutte](https://github.com/FriendsOfPHP/Goutte) to get data. If you want to set some options (or whatsoever) you can retrieve them with :
+
+```php
+$lostmovie->getGuzzle();
+$lostmovie->getGoutte();
+```
+
 Notes about the search engines
 ------------------------------
 
-We're using the Google search engine to have better results. Please don't make a whole bunch of requests directly otherwise Google will block ulterior requests for a time.
+We're using the Google search engine to have better results. Please don't make a whole bunch of requests directly otherwise Google will block ulterior requests for some time.
 
 License
 -------
